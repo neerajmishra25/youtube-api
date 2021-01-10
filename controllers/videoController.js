@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const getVideos = async () => {
 	const vidData = await axios.get(
-		`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=IN&maxResults=1&key=${process.env.GOOGLE_API_KEY}`
+		`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=IN&maxResults=50&key=${process.env.GOOGLE_API_KEY}`
 	);
 	return await Promise.all(
 		vidData.data.items.map(async (item) => {
