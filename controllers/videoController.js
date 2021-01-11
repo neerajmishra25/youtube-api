@@ -76,7 +76,7 @@ exports.putVideos = async (req, res) => {
 };
 
 exports.getVideos = async (req, res) => {
-	const videos = await Video.find({}).select("title thumbnails");
+	const videos = await Video.find({}).select("title thumbnails videoId");
 	return res.json(videos);
 };
 
