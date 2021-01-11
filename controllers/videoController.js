@@ -52,23 +52,25 @@ exports.postVideos = async (req, res) => {
 exports.putVideos = async (req, res) => {
 	try {
 		const videos = await getVideos();
+
 		const newVideos = await Promise.all(
-			videos.map(
-				async (video) =>
-					await Video.findOneAndUpdate(
-						{ videoId: video.videoId },
-						{ $set: { video } },
-						{
-							upsert: true,
-							new: true,
-						}
-					)
-			)
+			videos.map(async (video) => {
+				let newVideo = video.toObject();
+				delete newVideo._id;
+				return await Video.findOneAndUpdate(
+					{ videoId: video.videoId },
+					newVideo,
+					{
+						upsert: true,
+						new: true,
+					}
+				);
+			})
 		);
 		return res.status(200).json({
 			staus: "success",
 			msg: "Trending Video List updated successfully",
-			data: newVideos,
+			data: videos,
 		});
 	} catch (error) {
 		console.error(error);
