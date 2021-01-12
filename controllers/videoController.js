@@ -63,6 +63,7 @@ exports.putVideos = async (req, res) => {
 					{
 						upsert: true,
 						new: true,
+						setDefaultsOnInsert: true,
 					}
 				);
 			})
