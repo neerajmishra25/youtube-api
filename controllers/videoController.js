@@ -63,7 +63,7 @@ exports.putVideos = async (req, res) => {
 					{
 						upsert: true,
 						new: true,
-						setDefaultsOnInsert: true,
+						// setDefaultsOnInsert: true,
 					}
 				);
 			})
@@ -85,5 +85,8 @@ exports.getVideos = async (req, res) => {
 
 exports.getVideosDetails = async (req, res) => {
 	const videos = await Video.findById(req.params.id);
+	console.log(videos);
+	console.log(req.params.id);
+
 	return res.json(videos);
 };
