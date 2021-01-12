@@ -52,7 +52,7 @@ exports.postVideos = async (req, res) => {
 exports.putVideos = async (req, res) => {
 	try {
 		const videos = await getVideos();
-		const newVideos = await Promise.all(
+		await Promise.all(
 			videos.map(async (video) => {
 				let newVideo = video.toObject();
 				delete newVideo._id;
@@ -61,12 +61,13 @@ exports.putVideos = async (req, res) => {
 					newVideo,
 					{
 						upsert: true,
-						new: true,
+
 						setDefaultsOnInsert: true,
 					}
 				);
 			})
 		);
+		const newVideos = await Video.find({}).select("title thumbnails videoId");
 		return res.status(200).json({
 			staus: "success",
 			msg: "Trending Video List updated successfully",
